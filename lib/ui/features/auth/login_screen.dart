@@ -1,7 +1,9 @@
-import 'dart:async';
-
 import 'package:expense_app/routes/app_routes.dart';
+import 'package:expense_app/ui/features/auth/bloc/user_bloc.dart';
+import 'package:expense_app/ui/features/auth/bloc/user_event.dart';
+import 'package:expense_app/ui/features/auth/bloc/user_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,16 +16,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  String? _emailError;
-  String? _passwordError;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-
-    Timer(Duration(seconds: 2), () {
-      Navigator.pushNamed(context, AppRoutes.DASHBOARD_PAGE_ROUTE);
-    });
   }
 
   @override
@@ -71,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       labelText: "Email",
                       hintText: "Enter your email",
                       border: const OutlineInputBorder(),
-                      errorText: _emailError,
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -84,7 +80,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
-                      errorText: _passwordError,
                       labelText: "Password",
                       hintText: "Enter your Password",
                       border: const OutlineInputBorder(),
@@ -229,18 +224,57 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, AppRoutes.SIGNUP_PAGE_ROUTE);
-                      // if (_formKey.currentState?.validate() ?? false) {}
+                  BlocListener<UserBloc, UserState>(
+                    listener: (context, state) async {
+                      if (state is UserLoadingState) {
+                        isLoading = true;
+                        setState(() {});
+                      }
+                      if (state is UserSuccessState) {
+                        isLoading = false;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Center(child: Text("Login Successful")),
+                          ),
+                        );
+                        // var prefs = await SharedPreferences.getInstance();
+                        // prefs.setInt(DBHelper.PREFS_USER_ID, state.userId);
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.DASHBOARD_PAGE_ROUTE,
+                        );
+                      }
+                      if (state is UserFailureState) {
+                        isLoading = false;
+                        setState(() {});
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Center(
+                              child: Text("Error: ${state.errorMessage}"),
+                            ),
+                          ),
+                        );
+                      }
                     },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Colors.deepPurple,
-                    ),
-                    child: const Text(
-                      "Sign in",
-                      style: TextStyle(color: Colors.white),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          context.read<UserBloc>().add(
+                            LoginUserEvent(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            ),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                        backgroundColor: Colors.deepPurple,
+                      ),
+                      child: const Text(
+                        "Login In",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),

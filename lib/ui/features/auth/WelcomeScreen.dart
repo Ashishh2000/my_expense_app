@@ -1,6 +1,8 @@
 // ignore: file_names
+import 'package:expense_app/data/exp_db_helper.dart';
 import 'package:expense_app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -40,7 +42,11 @@ class WelcomeScreen extends StatelessWidget {
                 backgroundColor: Colors.deepPurple,
                 minimumSize: const Size(400, 50),
               ),
-              onPressed: () {
+              onPressed: () async {
+                // LOGIN VIA SHARED PREFS
+                // var prefs = await SharedPreferences.getInstance();
+                // prefs.setInt(DBHelper.PREFS_USER_ID, 1);
+
                 Navigator.pushNamed(context, AppRoutes.LOGIN_PAGE_ROUTE);
               },
               child: const Text('Login', style: TextStyle(color: Colors.white)),

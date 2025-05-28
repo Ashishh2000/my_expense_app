@@ -1,3 +1,4 @@
+import 'package:expense_app/routes/app_routes.dart';
 import 'package:expense_app/ui/pages/first_page.dart';
 import 'package:flutter/material.dart';
 
@@ -210,6 +211,12 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.ADD_EXPENSE_PAGE_ROUTE);
+              },
+              icon: Icon(Icons.arrow_forward),
             ),
           ],
         ),

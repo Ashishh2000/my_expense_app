@@ -1,3 +1,4 @@
+import 'package:expense_app/ui/pages/add_expense.dart';
 import 'package:expense_app/ui/pages/splash/splash_page.dart';
 import 'package:expense_app/ui/features/auth/SignUpScreen.dart';
 import 'package:expense_app/ui/features/auth/WelcomeScreen.dart';
@@ -15,6 +16,7 @@ class AppRoutes {
   static const WELCOME_PAGE_ROUTE = '/welcome';
   static const LOGIN_PAGE_ROUTE = '/login';
   static const SIGNUP_PAGE_ROUTE = '/signup';
+  static const ADD_EXPENSE_PAGE_ROUTE = '/add_expense';
 
   static Map<String, Widget Function(BuildContext)> mRoutes = {
     SPLASH_PAGE_ROUTE: (context) => SplashPage(),
@@ -24,5 +26,6 @@ class AppRoutes {
     WELCOME_PAGE_ROUTE: (context) => WelcomeScreen(),
     LOGIN_PAGE_ROUTE: (context) => LoginScreen(),
     SIGNUP_PAGE_ROUTE: (context) => SignUpScreen(),
+    ADD_EXPENSE_PAGE_ROUTE: (context) => AddExpense(),
   };
 }
