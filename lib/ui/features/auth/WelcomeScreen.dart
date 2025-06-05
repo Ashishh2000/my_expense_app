@@ -44,8 +44,8 @@ class WelcomeScreen extends StatelessWidget {
               ),
               onPressed: () async {
                 // LOGIN VIA SHARED PREFS
-                // var prefs = await SharedPreferences.getInstance();
-                // prefs.setInt(DBHelper.PREFS_USER_ID, 1);
+                var prefs = await SharedPreferences.getInstance();
+                prefs.setInt(DBHelper.PREFS_USER_ID, 1);
 
                 Navigator.pushNamed(context, AppRoutes.LOGIN_PAGE_ROUTE);
               },

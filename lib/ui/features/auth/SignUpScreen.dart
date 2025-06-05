@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:expense_app/data/models/user_model.dart';
+import 'package:expense_app/routes/app_routes.dart';
 import 'package:expense_app/ui/features/auth/bloc/user_bloc.dart';
 import 'package:expense_app/ui/features/auth/bloc/user_event.dart';
 import 'package:expense_app/ui/features/auth/bloc/user_state.dart';
@@ -199,11 +200,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               )
                               : Text(
                                 'Sign Up',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.white)
                               ),
                     ),
                   ),
                 ),
+                SizedBox(height: 15,),
+                Text("OR",textAlign: TextAlign.center,style: TextStyle(color: Colors.deepPurple,fontWeight: FontWeight.w500),),
+                SizedBox(height: 15,),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Colors.deepPurple),
+                      minimumSize: const Size(400, 50),
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, AppRoutes.LOGIN_PAGE_ROUTE);
+                    },
+                    child:
+                     Text(
+                        'LogIn',
+                        style: TextStyle(color: Colors.deepPurple)
+                    ),
+                  ),
+                )
               ],
             ),
           ),

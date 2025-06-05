@@ -8,29 +8,29 @@ class FirstPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0XFFFFFFFF),
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.HOME_PAGE_ROUTE);
-            },
-            icon: Icon(Icons.arrow_back_ios),
-          ),
-        ],
-        backgroundColor: Color(0XFFFFFFFF),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Image.asset(
-            'assets/images/splash_image-logo.png',
-            fit: BoxFit.contain,
-          ),
-        ),
-        title: Text(
-          "Expense",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: false,
-      ),
+      // appBar: AppBar(
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         Navigator.pushNamed(context, AppRoutes.HOME_PAGE_ROUTE);
+      //       },
+      //       icon: Icon(Icons.arrow_back_ios),
+      //     ),
+      //   ],
+      //   backgroundColor: Color(0XFFFFFFFF),
+      //   leading: Padding(
+      //     padding: const EdgeInsets.only(left: 8.0),
+      //     child: Image.asset(
+      //       'assets/images/splash_image-logo.png',
+      //       fit: BoxFit.contain,
+      //     ),
+      //   ),
+      //   title: Text(
+      //     "Expense",
+      //     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      //   ),
+      //   centerTitle: false,
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -225,17 +225,6 @@ class FirstPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color(0xFF7F6EFF),
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.auto_graph), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-        ],
       ),
     );
   }

@@ -71,14 +71,14 @@ class DBHelper {
   }
 
   ///events
-  ///createUser
+  /// createUser
   Future<bool> createUser({required UserModel userModel}) async {
     var db = await initDB();
     int rowsEffected = await db.insert(TABLE_USER, userModel.toMap());
     return rowsEffected > 0;
   }
 
-  ///checkIfUserAlreadyExists
+  /// checkIfUserAlreadyExists
   Future<bool> checkIfUserAlreadyExists({required String email}) async {
     var db = await initDB();
 
@@ -91,7 +91,7 @@ class DBHelper {
     return mData.isNotEmpty;
   }
 
-  ///authenticateUser
+  /// authenticateUser
   Future<bool> authenticateUser({
     required email,
     required String password,
@@ -103,7 +103,7 @@ class DBHelper {
       whereArgs: [email, password],
     );
 
-    // Add User ID (Specific user expenses show) in sharedPref.
+    /// Add User ID (Specific user expenses show) in sharedPref.
     if (mData.isNotEmpty) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setInt(PREFS_USER_ID, mData[0][COLUMN_USER_ID]);
@@ -111,7 +111,7 @@ class DBHelper {
     return mData.isNotEmpty;
   }
 
-  ///addExpense
+  /// addExpense
   Future<bool> addExpense({required ExpenseModel expense}) async {
     var db = await initDB();
     // Get userID from Shared Preferences.
@@ -132,6 +132,7 @@ class DBHelper {
       TABLE_EXPENSE,
       where: "$COLUMN_USER_ID = ?",
       whereArgs: [userId],
+      orderBy: "$COLUMN_EXP_CREATED_AT desc"
     );
 
     List<ExpenseModel> allExp = [];

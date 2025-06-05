@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool isLoading = false;
+  bool obscurePassword = true;
 
   @override
   void initState() {
@@ -79,11 +80,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
+                    obscuringCharacter: '*',
+                    obscureText: obscurePassword,
                     decoration: InputDecoration(
                       labelText: "Password",
                       hintText: "Enter your Password",
                       border: const OutlineInputBorder(),
-                      suffixIcon: const Icon(Icons.visibility),
+                      suffixIcon: IconButton(onPressed: (){
+                        obscurePassword = !obscurePassword;
+                        setState(() {
+
+                        });
+                      }, icon: Icon(
+                        obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      ),),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -108,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text('Forgot Password'),
+                                title: const Text('Forgot Password',),
                                 content: const Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
@@ -176,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           context,
                                                         ) => AlertDialog(
                                                           title: const Text(
-                                                            'Password reset Successflly!',
+                                                            'Password reset Successfully',
                                                           ),
                                                           content: const Text(
                                                             "Your password has been reset.",
@@ -216,8 +226,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: const Text(
                           "Forgot Password",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0XFF6A676D),
                           ),
                         ),
                       ),
@@ -237,8 +247,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             content: Center(child: Text("Login Successful")),
                           ),
                         );
-                        // var prefs = await SharedPreferences.getInstance();
-                        // prefs.setInt(DBHelper.PREFS_USER_ID, state.userId);
+
                         Navigator.pushNamed(
                           context,
                           AppRoutes.DASHBOARD_PAGE_ROUTE,
@@ -280,8 +289,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 16),
                   Center(
                     child: TextButton(
-                      onPressed: () {},
-                      child: const Text('Dont have an account? Sign Up'),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, AppRoutes.SIGNUP_PAGE_ROUTE);
+                      },
+                      child: const Text("Don't have an account? Sign Up"),
                     ),
                   ),
                 ],
